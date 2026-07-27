@@ -2,7 +2,7 @@ Full-Stack E-Commerce Platform
 
 A high-performance, production-ready e-commerce application built with the modern Next.js ecosystem. This project features dynamic route-based filtering, predictable global state management, secure user authentication, and a complete Stripe checkout integration. [1, 2]
 
-🌐 Live Demo: View Live Deployment on Vercel
+🌐 Live Demo: View Live Deployment on Vercel : https://modern-b2-c-e-commerce-gd2txez1w-wahib1.vercel.app/
 
 🚀 Key Features
 
