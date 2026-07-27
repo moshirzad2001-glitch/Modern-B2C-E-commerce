@@ -2,7 +2,7 @@ import { SignUp } from "@clerk/nextjs";
 
 export default function SigningUp() {
   return (
-    <section className="flex items-center justify-evenly ">
+    <section className="flex flex-col lg:flex-row gap-10 min-h-screen items-center justify-evenly ">
       <div className="min-h-screen flex justify-center items-center py-3">
         <SignUp />
       </div>

@@ -2,7 +2,7 @@ import { SignIn } from "@clerk/nextjs";
 
 export default function SigningIn() {
   return (
-    <section className="flex items-center justify-evenly ">
+    <section className="flex items-center justify-evenly flex-col lg:flex-row gap-10 min-h-screen">
       <div className="flex items-center justify-center min-h-screen">
         <SignIn />
       </div>
