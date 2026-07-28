@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
 
 // 1. Array containing your 3 background image links
 const BANNER_IMAGES = ["/perfume.jpg", "/leather.jpg", "/mainbg.png"];
@@ -7,7 +8,18 @@ const BANNER_IMAGES = ["/perfume.jpg", "/leather.jpg", "/mainbg.png"];
 export default function HeroBanner() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const handleNext = () => {
+    const isLastSlide = currentIndex === BANNER_IMAGES.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      handleNext();
+    }, 2000);
 
+    return () => clearInterval(timer);
+  }, [currentIndex]);
 
   return (
     <div className="relative w-full h-100 md:h-125 overflow-hidden bg-gray-100 select-none">
@@ -15,7 +27,6 @@ export default function HeroBanner() {
         className="w-full h-full  bg-cover bg-center transition-all duration-1000 ease-in-out"
         style={{ backgroundImage: `url(${BANNER_IMAGES[currentIndex]})` }}
       />
-
 
 
 
