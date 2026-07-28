@@ -1,89 +1,37 @@
 "use client";
+import { useState } from "react";
 
-import { motion } from "motion/react";
-import React from "react";
-import Image from "next/image";
-const HeroImage = () => {
-  const Motionimage = motion.create(Image);
+// 1. Array containing your 3 background image links
+const BANNER_IMAGES = ["/perfume.jpg", "/leather.jpg", "/mainbg.png"];
+
+export default function HeroBanner() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+
+
   return (
-    <div className="w-screen md:h-[50%] relative pb-120 lg:w-[50%] lg:h-full lg:p-1.5 ">
-      <Motionimage
-        src="/laptop on desk.jpg"
-        alt="hero image"
-        width={800}
-        height={270}
-        priority
-        animate={{
-          opacity: [1, 1, 0, 0, 0],
-        }}
-        style={{
-          opacity: 1,
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="absolute inset-0 p-1.5 h-120 md:h-full   rounded-xl object-cover w-full"
+    <div className="relative w-full h-100 md:h-125 overflow-hidden bg-gray-100 select-none">
+      <div
+        className="w-full h-full  bg-cover bg-center transition-all duration-1000 ease-in-out"
+        style={{ backgroundImage: `url(${BANNER_IMAGES[currentIndex]})` }}
       />
-      <Motionimage
-        src="/perfume.jpg"
-        alt="hero image"
-        width={800}
-        loading="eager"
-        height={270}
-        style={{
-            opacity: 0,
-        }}
-        animate={{
-            opacity: [0, 1, 1, 0, 0],
-        }}
-        transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-        }}
-        className="absolute inset-0 p-1.5 h-120 md:h-full   rounded-xl object-cover w-full"
-      />
-        <Motionimage
-          src="/leather.jpg"
-          alt="hero image"
-          width={800}
-          height={270}
-          animate={{
-            opacity: [0, 0, 1, 1, 0],
-          }}
-          style={{
-            opacity: 0,
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute inset-0  p-1.5 h-120 md:h-full   rounded-xl object-cover w-full"
-        />
-      <Motionimage
-        src="/chair.jpg"
-        alt="hero image"
-        width={800}
-        height={270}
-        animate={{
-          opacity: [0, 0, 0, 1, 1],
-        }}
-        style={{
-          opacity: 0,
-        }}
-        loading="eager"
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="absolute inset-0  p-1.5 h-120 md:h-full   rounded-xl object-cover w-full"
-      />
+
+
+
+
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex space-x-3">
+        {BANNER_IMAGES.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${currentIndex === index
+                ? "bg-amber-500 scale-125 shadow-md"
+                : "bg-white/60 hover:bg-white"
+              }`}
+          />
+        ))}
+      </div>
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t  from-gray-100 to-transparent  pointer-events-none" />
     </div>
   );
-};
-
-export default HeroImage;
+}

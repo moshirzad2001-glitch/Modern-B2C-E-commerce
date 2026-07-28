@@ -6,20 +6,14 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import Link from "next/link";
-
+import HeroBanner from "@/components/ui/HeroImage";
 
 const page = () => {
   return (
     <div className="flex flex-col  w-full gap-4  z-10 bg-slate-200 min-h-screen ">
       <div className="absolute h-screen mt-[0.4%] inset-0 -z-10 ">
-        <Image
-          src="/mainbg.png"
-          alt="hero Images"
-          fill
-          priority
-          className=" pt-15 h-full object-cover sm:object-top w-full"
-        ></Image>
-         
+
+         <HeroBanner />
       </div>
       <div className="flex w-full relative min-h-[90vh] flex-col  pt-[40vh]">
             <div className="grid grid-cols-1 lg:grid-cols-3 place-content-end place-items-center md:min-h-full w-full  pb-3 px-3 gap-4">
