@@ -3,15 +3,17 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addone, defaultvalue, removefromcard, removeone } from "@/redux/createslice";
 import Image from "next/image";
-import { Trash2 } from "lucide-react";
+import { ArrowLeft, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const dispatch = useAppDispatch();
-  const cartItems:defaultvalue[] = useAppSelector((item) => item.cart.card);
+  const router = useRouter()
+  const cartItems: defaultvalue[] = useAppSelector((item) => item.cart.card);
   const [loading, setLoading] = useState(false);
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -21,20 +23,23 @@ export default function CartPage() {
   const tax = subtotal * 0.08;
   const total = subtotal + tax;
   const handleCheckout = async () => {
-    setLoading(true); 
-    const response = await axios.post("/api/checkout", {cartItems});
+    setLoading(true);
+    const response = await axios.post("/api/checkout", { cartItems });
     const data = response.data;
 
     if (data && data.url) {
       window.location.href = data.url;
-    } else{
+    } else {
       setLoading(false)
-     
+
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 font-sans antialiased text-gray-900">
+      <span onClick={() => router.back()} className="flex items-center text-primary-text hover:opacity-65 m-2">
+        <ArrowLeft /> Go Back
+      </span>
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-extrabold tracking-tight mb-8">
           Shopping Cart
@@ -76,7 +81,7 @@ export default function CartPage() {
                         {item.name}
                       </h3>
                       <p className="font-bold text-indigo-600 mt-1 sm:hidden">
-                        ${item.price.toFixed(2)}
+                        £{item.price.toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -96,7 +101,7 @@ export default function CartPage() {
                         {item.quantity}
                       </span>
                       <button
-                      disabled={loading}
+                        disabled={loading}
                         onClick={() => {
                           dispatch(addone(item));
                         }}
@@ -108,7 +113,7 @@ export default function CartPage() {
 
                     <div className="text-right hidden sm:block min-w-20">
                       <p className="font-bold text-lg">
-                         £{(item.price * item.quantity).toFixed(2)}
+                        £{(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
 
@@ -142,25 +147,25 @@ export default function CartPage() {
                   </span>
                 </div>
 
-                 <div className="flex justify-between">
+                <div className="flex justify-between">
                   <span>E-Commerce Tax</span>
                   <span className="font-semibold text-gray-900">
-                     £{tax.toFixed(2)}
+                    £{tax.toFixed(2)}
                   </span>
-                </div> 
+                </div>
               </div>
 
               <div className="flex justify-between items-center py-6">
                 <span className="text-base font-bold">Total</span>
                 <span className="text-2xl font-black text-yellow-500 hover:opacity-85">
-                   £{total.toFixed(2)}
+                  £{total.toFixed(2)}
                 </span>
               </div>
 
               <Button
                 onClick={handleCheckout}
                 disabled={loading}
-                
+
                 className="w-full bg-[#FFD814] text-gray-950 rounded-full py-2.5"
               >
                 {loading ? "Processing Secure Checkout..." : "Proceed to Checkout"}

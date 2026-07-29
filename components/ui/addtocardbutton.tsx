@@ -2,6 +2,7 @@
 
 import { useAppDispatch } from "@/redux/hooks";
 import { addtocard } from "@/redux/createslice";
+import { useState } from "react";
 import { Button } from "./button";
 import { ShoppingBag } from "lucide-react";
 export default function addtocardbutton({
@@ -13,7 +14,8 @@ export default function addtocardbutton({
   productPrice: number;
   productImage: string;
 }) {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const [isadded, setIsAdded] = useState(false);
   const handleaddtocard = () => {
     dispatch(
       addtocard({
@@ -22,14 +24,14 @@ export default function addtocardbutton({
         image: productImage,
       }),
     );
+    setIsAdded(true);
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 1000);
   };
   return (
     <Button
-      onClick={handleaddtocard}
-      className="w-full bg-primary-text text-white hover:bg-[#0052CC] text-[10px] sm:text-xs font-medium uppercase py-2.5 h-auto tracking-wider rounded-sm shadow-sm transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-    >
-      <ShoppingBag className="w-3.5 h-3.5 stroke-[1.8] transition-transform duration-200 group-hover/btn:-translate-y-0.5" />
-      Add To Bag
+      onClick={handleaddtocard} className={`w-full py-2.5 px-4 rounded-lg font-medium transition-all duration-200 transform active:scale-95 flex items-center justify-center gap-2 ${isadded ? 'bg-green-600 text-white font-semibold scale-105' : 'bg-black text-white hover:bg-zinc-800'}`} > <span> {isadded ? ' Added to Bag' : 'Add to Bag'} </span>
     </Button>
   );
 }
